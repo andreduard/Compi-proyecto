@@ -312,7 +312,15 @@ public class Parser {
         Expression eAST = parseExpression();
         accept(Token.THEN);
         Command c1AST = parseCommand();
-        Command c2AST = parseElsifCommand();
+        Command c2AST;
+        if (currentToken.kind == Token.ELSIF){
+            c2AST = parseElsifCommand();
+        } else {
+            accept(Token.ELSE);
+            c2AST = parseCommand();
+            accept(Token.END);
+        }
+        
         finish(commandPos);
         commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
       }

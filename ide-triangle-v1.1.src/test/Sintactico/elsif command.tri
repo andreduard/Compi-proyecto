@@ -1,6 +1,6 @@
 if a 
 then x:=1
 elsif b
-then a:=2
-else c:=2
+then a
+else c
 end
