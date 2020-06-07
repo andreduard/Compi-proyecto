@@ -32,6 +32,7 @@ import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
 import Triangle.AbstractSyntaxTrees.Declaration;
 import Triangle.AbstractSyntaxTrees.DotVname;
+import Triangle.AbstractSyntaxTrees.ElsifCommand;
 import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
@@ -293,18 +294,13 @@ public class Parser {
       }
       break;
 
-    case Token.BEGIN:
-      acceptIt();
-      commandAST = parseCommand();
-      accept(Token.END);
-      break;
-
     case Token.LET:
       {
         acceptIt();
         Declaration dAST = parseDeclaration();
         accept(Token.IN);
-        Command cAST = parseSingleCommand();
+        Command cAST = parseCommand();
+        accept(Token.END);
         finish(commandPos);
         commandAST = new LetCommand(dAST, cAST, commandPos);
       }
@@ -315,9 +311,8 @@ public class Parser {
         acceptIt();
         Expression eAST = parseExpression();
         accept(Token.THEN);
-        Command c1AST = parseSingleCommand();
-        accept(Token.ELSE);
-        Command c2AST = parseSingleCommand();
+        Command c1AST = parseCommand();
+        Command c2AST = parseElsifCommand();
         finish(commandPos);
         commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
       }
@@ -354,6 +349,31 @@ public class Parser {
     return commandAST;
   }
 
+  Command parseElsifCommand() throws SyntaxError {
+        Command commandAST = null; // in case there's a syntactic error
+
+        SourcePosition commandPos = new SourcePosition();
+        
+        start(commandPos);
+        accept(Token.ELSIF);
+        Expression eAST = parseExpression();
+        accept(Token.THEN);
+        Command c1AST = parseCommand();
+        
+        Command c2AST;
+        if(currentToken.kind == Token.ELSIF){
+            c2AST = parseElsifCommand();
+        } else{
+            accept(Token.ELSE);
+            c2AST = parseCommand();
+            accept(Token.END);
+        }
+        finish(commandPos);
+
+        commandAST = new ElsifCommand(eAST, c1AST, c2AST, commandPos);
+        return commandAST;
+  }
+  
 ///////////////////////////////////////////////////////////////////////////////
 //
 // EXPRESSIONS
