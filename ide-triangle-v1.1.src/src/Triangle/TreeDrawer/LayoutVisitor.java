@@ -33,6 +33,7 @@ import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
 import Triangle.AbstractSyntaxTrees.DotVname;
+import Triangle.AbstractSyntaxTrees.ElsifCommand;
 import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
@@ -108,6 +109,10 @@ public class LayoutVisitor implements Visitor {
   public Object visitIfCommand(IfCommand ast, Object obj) {
     return layoutTernary("IfCom.", ast.E, ast.C1, ast.C2);
   }
+  
+    public Object visitElsifCommand(ElsifCommand ast, Object o) {
+        return layoutTernary("ElsifCom.", ast.E, ast.C1, ast.C2);
+    }
 
   public Object visitLetCommand(LetCommand ast, Object obj) {
     return layoutBinary("LetCom.", ast.D, ast.C);

@@ -21,6 +21,7 @@ import Triangle.AbstractSyntaxTrees.ConstActualParameter;
 import Triangle.AbstractSyntaxTrees.ConstDeclaration;
 import Triangle.AbstractSyntaxTrees.ConstFormalParameter;
 import Triangle.AbstractSyntaxTrees.DotVname;
+import Triangle.AbstractSyntaxTrees.ElsifCommand;
 import Triangle.AbstractSyntaxTrees.EmptyActualParameterSequence;
 import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
@@ -102,6 +103,10 @@ public class TreeVisitor implements Visitor {
     
     public Object visitIfCommand(IfCommand ast, Object obj) {
         return(createTernary("If Command", ast.E, ast.C1, ast.C2));
+    }
+    
+    public Object visitElsifCommand(ElsifCommand ast, Object o) {
+        return(createTernary("Elsif Command", ast.E, ast.C1, ast.C2));
     }
     
     public Object visitLetCommand(LetCommand ast, Object obj) {
@@ -437,4 +442,5 @@ public class TreeVisitor implements Visitor {
         return(t);             
     }
     // </editor-fold>
+
 }
