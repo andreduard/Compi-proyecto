@@ -63,6 +63,16 @@ public class TreeVisitor implements Visitor {
     public Object visitUntilCommand(UntilCommand ast, Object o) {
         return(createBinary("Until Command", ast.E, ast.C));
     }
+
+    @Override
+    public Object visitDoWhileCommand(DoWhileCommand ast, Object o) {
+        return(createBinary("Do While Command", ast.E, ast.C));
+    }
+
+    @Override
+    public Object visitDoUntilCommand(DoUntilCommand ast, Object o) {
+        return(createBinary("Do Until Command", ast.E, ast.C));
+    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" Expressions ">

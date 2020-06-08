@@ -64,8 +64,17 @@ public class LayoutVisitor implements Visitor {
   }
 
   @Override
-  public Object visitUntilCommand(UntilCommand ast, Object o) {
-    return layoutBinary("UntilCom.", ast.E, ast.C);
+  public Object visitUntilCommand(UntilCommand ast, Object o) { return layoutBinary("UntilCom.", ast.E, ast.C);
+  }
+
+  @Override
+  public Object visitDoWhileCommand(DoWhileCommand ast, Object o) {
+    return layoutBinary("DoWhileCom.", ast.E, ast.C);
+  }
+
+  @Override
+  public Object visitDoUntilCommand(DoUntilCommand ast, Object o) {
+    return layoutBinary("DoUntilCom.", ast.E, ast.C);
   }
 
 

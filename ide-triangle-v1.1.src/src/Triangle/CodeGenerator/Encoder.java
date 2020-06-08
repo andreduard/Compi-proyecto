@@ -99,6 +99,16 @@ public final class Encoder implements Visitor {
   }
 
   @Override
+  public Object visitDoWhileCommand(DoWhileCommand ast, Object o) {
+    return null;
+  }
+
+  @Override
+  public Object visitDoUntilCommand(DoUntilCommand ast, Object o) {
+    return null;
+  }
+
+  @Override
   public Object visitElsifCommand(ElsifCommand aThis, Object o) {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }

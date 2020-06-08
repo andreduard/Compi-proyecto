@@ -96,6 +96,16 @@ public final class Checker implements Visitor {
     return null;
   }
 
+  @Override
+  public Object visitDoWhileCommand(DoWhileCommand ast, Object o) {
+    return null;
+  }
+
+  @Override
+  public Object visitDoUntilCommand(DoUntilCommand ast, Object o) {
+    return null;
+  }
+
   // Expressions
 
   // Returns the TypeDenoter denoting the type of the expression. Does

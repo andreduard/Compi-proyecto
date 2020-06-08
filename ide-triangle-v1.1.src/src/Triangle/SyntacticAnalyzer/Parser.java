@@ -255,8 +255,15 @@ public class Parser {
               commandAST = new DoUntilCommand(eAST, cAST, commandPos);
             }
           }
+          break;
+
+          case Token.VAR:{
+            
+          }
         }
           break;
+
+
       }
 
     case Token.IDENTIFIER:
