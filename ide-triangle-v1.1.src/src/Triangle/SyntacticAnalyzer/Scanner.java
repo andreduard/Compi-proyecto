@@ -84,19 +84,37 @@ public final class Scanner {
 
   private void scanSeparator() {
     switch (currentChar) {
-    case '!':
-      {
+      case '!': {
         takeIt();
-        while ((currentChar != SourceFile.EOL) && (currentChar != SourceFile.EOT))
+        String comment = "!";
+        while ((currentChar != SourceFile.EOL) && (currentChar != SourceFile.CR) && (currentChar != SourceFile.EOT)) {
+          comment = comment + currentChar;
           takeIt();
-        if (currentChar == SourceFile.EOL)
+        }
+        if (currentChar == SourceFile.CR) {
           takeIt();
+        }
+        if (currentChar == SourceFile.EOL) {
+          takeIt();
+        }
+        if (writingHTML) {
+          this.htmlWriter.writeComment(comment);
+        }
       }
       break;
 
-    case ' ': case '\n': case '\r': case '\t':
-      takeIt();
-      break;
+      case '\n':
+        if (writingHTML)
+          htmlWriter.writeElse("<br>\n");
+        takeIt();
+        break;
+
+      case ' ':
+      case '\t':
+        if (writingHTML)
+          htmlWriter.writeElse(String.valueOf(currentChar));
+        takeIt();
+        break;
     }
   }
 

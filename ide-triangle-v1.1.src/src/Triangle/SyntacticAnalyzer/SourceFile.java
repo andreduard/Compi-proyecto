@@ -17,6 +17,7 @@ package Triangle.SyntacticAnalyzer;
 public class SourceFile {
 
   public static final char EOL = '\n';
+  public static final char CR =  '\r';
   public static final char EOT = '\u0000';
 
   java.io.File sourceFile;
