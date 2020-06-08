@@ -610,13 +610,68 @@ public class Parser {
 
     SourcePosition declarationPos = new SourcePosition();
     start(declarationPos);
-    declarationAST = parseSingleDeclaration();
+    declarationAST = parseCompoundDeclaration();
     while (currentToken.kind == Token.SEMICOLON) {
       acceptIt();
-      Declaration d2AST = parseSingleDeclaration();
+      Declaration d2AST = parseCompoundDeclaration();
       finish(declarationPos);
       declarationAST = new SequentialDeclaration(declarationAST, d2AST,
         declarationPos);
+    }
+    return declarationAST;
+  }
+
+   Declaration parseCompoundDeclaration() throws SyntaxError {
+      Declaration declarationAST = null; // in case there's a syntactic error
+
+      SourcePosition declarationPos = new SourcePosition();
+      start(declarationPos);
+
+      switch (currentToken.kind){
+
+        case Token.REC:{
+          acceptIt();
+          declarationAST = parseProcFunc();
+
+        }
+        break;
+
+      }
+
+      return declarationAST;
+    }
+
+  private Declaration parseProcFunc() throws SyntaxError {
+    Declaration declarationAST = null; // in case there's a syntactic error
+
+    SourcePosition declarationPos = new SourcePosition();
+    start(declarationPos);
+
+    if (currentToken.kind == Token.PROC){
+      acceptIt();
+      Identifier iAST = parseIdentifier();
+      accept(Token.LPAREN);
+      FormalParameterSequence fps = parseFormalParameterSequence();
+      accept(Token.RPAREN);
+      accept(Token.IS);
+      Command cAST = parseCommand();
+      accept(Token.END);
+      finish(declarationPos);
+      declarationAST = new ProcDeclaration(iAST,fps,cAST,declarationPos);
+    }
+    else{
+      accept(Token.FUNC);
+      Identifier iAST = parseIdentifier();
+      accept(Token.LPAREN);
+      FormalParameterSequence fps = parseFormalParameterSequence();
+      accept(Token.RPAREN);
+      accept(Token.COLON);
+      TypeDenoter type = parseTypeDenoter();
+      accept(Token.IS);
+      Expression eAST = parseExpression();
+      accept(Token.END);
+      finish(declarationPos);
+      declarationAST = new FuncDeclaration(iAST, fps,type,eAST,declarationPos);
     }
     return declarationAST;
   }
