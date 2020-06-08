@@ -139,6 +139,11 @@ public class LayoutVisitor implements Visitor {
     return layoutBinary("PrivateDecl.", ast.dAST,ast.dAST2);
   }
 
+  @Override
+  public Object visitVarInitializedDeclaration(VarInitializedDeclaration ast, Object o) {
+    return layoutBinary("VarInitializedDecl.", ast.I,ast.eAST);
+  }
+
   public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object obj) {
     return layoutQuaternary("Bin.Op.Decl.", ast.O, ast.ARG1, ast.ARG2, ast.RES);
   }

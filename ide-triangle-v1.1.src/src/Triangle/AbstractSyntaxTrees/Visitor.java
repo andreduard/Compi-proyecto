@@ -44,6 +44,7 @@ public interface Visitor {
   public abstract Object visitUnaryExpression(UnaryExpression ast, Object o);
   public abstract Object visitVnameExpression(VnameExpression ast, Object o);
 
+
   // Declarations
   public abstract Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object o);
   public abstract Object visitConstDeclaration(ConstDeclaration ast, Object o);
@@ -55,6 +56,7 @@ public interface Visitor {
   public abstract Object visitVarDeclaration(VarDeclaration ast, Object o);
   public abstract Object visitRecursiveProcFunc(RecursiveProcFunc recursiveProcFunc, Object o);
   public abstract Object visitPrivateDeclaration(PrivateDeclaration privateDeclaration, Object o);
+  public abstract Object visitVarInitializedDeclaration(VarInitializedDeclaration varInitializedDeclaration, Object o);
 
   // Array Aggregates
   public abstract Object visitMultipleArrayAggregate(MultipleArrayAggregate ast, Object o);
@@ -110,6 +112,5 @@ public interface Visitor {
 
   // Programs
   public abstract Object visitProgram(Program ast, Object o);
-
 
 }

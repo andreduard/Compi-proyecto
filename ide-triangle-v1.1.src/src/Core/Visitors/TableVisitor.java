@@ -110,6 +110,11 @@ public class TableVisitor implements Visitor {
     }
 
     @Override
+    public Object visitVarInitializedDeclaration(VarInitializedDeclaration varInitializedDeclaration, Object o) {
+        return null;
+    }
+
+    @Override
     public Object visitElsifCommand(ElsifCommand aThis, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

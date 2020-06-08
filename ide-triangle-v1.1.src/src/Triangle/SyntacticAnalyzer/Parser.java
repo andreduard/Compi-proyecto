@@ -749,10 +749,18 @@ public class Parser {
       {
         acceptIt();
         Identifier iAST = parseIdentifier();
-        accept(Token.COLON);
-        TypeDenoter tAST = parseTypeDenoter();
-        finish(declarationPos);
-        declarationAST = new VarDeclaration(iAST, tAST, declarationPos);
+        if (currentToken.kind == Token.COLON) {
+          acceptIt();
+          TypeDenoter tAST = parseTypeDenoter();
+          finish(declarationPos);
+          declarationAST = new VarDeclaration(iAST, tAST, declarationPos);
+        }
+        else{
+          accept(Token.BECOMES);
+          Expression eAST = parseExpression();
+          finish(declarationPos);
+          declarationAST = new VarInitializedDeclaration(iAST,eAST,declarationPos);
+        }
       }
       break;
 
@@ -764,7 +772,8 @@ public class Parser {
         FormalParameterSequence fpsAST = parseFormalParameterSequence();
         accept(Token.RPAREN);
         accept(Token.IS);
-        Command cAST = parseSingleCommand();
+        Command cAST = parseCommand();
+        accept(Token.END);
         finish(declarationPos);
         declarationAST = new ProcDeclaration(iAST, fpsAST, cAST, declarationPos);
       }

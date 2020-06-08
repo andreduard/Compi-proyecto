@@ -88,6 +88,11 @@ public class TreeVisitor implements Visitor {
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
         return(createBinary("Private Declaration", ast.dAST, ast.dAST2));
     }
+
+    @Override
+    public Object visitVarInitializedDeclaration(VarInitializedDeclaration ast, Object o) {
+        return(createBinary("Var Initialized Declaration", ast.I, ast.eAST));
+    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" Expressions ">
