@@ -258,8 +258,20 @@ public class Parser {
           break;
 
           case Token.VAR:{
-            
+              acceptIt();
+              Identifier identifier = parseIdentifier();
+              accept(Token.IN);
+              Expression idAST = parseExpression();
+              ConstDeclaration cDeclaration = new ConstDeclaration(identifier,idAST,commandPos);
+              accept(Token.TO);
+              Expression eAST = parseExpression();
+              accept(Token.DO);
+              Command cAST = parseCommand();
+              accept(Token.END);
+              finish(commandPos);
+              commandAST = new RepeatVariableCommand(eAST, cAST, cDeclaration, commandPos);
           }
+          break;
         }
           break;
 

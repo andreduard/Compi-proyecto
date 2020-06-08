@@ -73,6 +73,11 @@ public class TreeVisitor implements Visitor {
     public Object visitDoUntilCommand(DoUntilCommand ast, Object o) {
         return(createBinary("Do Until Command", ast.E, ast.C));
     }
+
+    @Override
+    public Object visitRepeatVariableCommand(RepeatVariableCommand ast, Object o) {
+        return(createTernary("Repeat Var Command", ast.RepVarDecl, ast.E,ast.C1));
+    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" Expressions ">

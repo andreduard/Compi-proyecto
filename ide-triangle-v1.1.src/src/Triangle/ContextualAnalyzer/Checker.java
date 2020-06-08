@@ -106,6 +106,11 @@ public final class Checker implements Visitor {
     return null;
   }
 
+  @Override
+  public Object visitRepeatVariableCommand(RepeatVariableCommand repeatVariableCommand, Object o) {
+    return null;
+  }
+
   // Expressions
 
   // Returns the TypeDenoter denoting the type of the expression. Does
