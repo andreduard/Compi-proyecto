@@ -17,6 +17,8 @@ package Triangle.SyntacticAnalyzer;
 import Triangle.AbstractSyntaxTrees.*;
 import Triangle.ErrorReporter;
 
+import javax.swing.text.DefaultCaret;
+
 public class Parser {
 
   private Scanner lexicalAnalyser;
@@ -631,15 +633,63 @@ public class Parser {
 
         case Token.REC:{
           acceptIt();
-          declarationAST = parseProcFunc();
-
+          declarationAST = parseProcFuncs();
+          accept(Token.END);
+          finish(declarationPos);
+          declarationAST = new RecursiveProcFunc(declarationAST,declarationPos);
         }
         break;
 
+        case Token.PRIVATE:{
+          acceptIt();
+          declarationAST = parseDeclaration();
+          accept(Token.IN);
+          Declaration declarationAST2 = parseDeclaration();
+          accept(Token.END);
+          finish(declarationPos);
+          declarationAST = new PrivateDeclaration(declarationAST,declarationAST2,declarationPos);
+        }
+        break;
+        case Token.CONST:
+        case Token.VAR:
+        case Token.TYPE:
+        case Token.FUNC:
+        case Token.PROC:
+          declarationAST = parseSingleDeclaration();
+          break;
+        default:{
+          syntacticError("\"%\" Cannot start a Compound Declaration",
+                  currentToken.spelling);
+        }
       }
 
       return declarationAST;
     }
+
+  private Declaration parseProcFuncs() throws SyntaxError {
+    Declaration declarationAST = null; // in case there's a syntactic error
+
+    SourcePosition declarationPos = new SourcePosition();
+    start(declarationPos);
+
+    if (currentToken.kind == Token.PROC || currentToken.kind == Token.FUNC) {
+      declarationAST = parseProcFunc();
+      finish(declarationPos);
+    } else {
+      syntacticError("\"%\" error parsing proc-func token", currentToken.spelling);
+    }
+    do {
+      accept(Token.AND);
+      if(currentToken.kind == Token.PROC || currentToken.kind == Token.FUNC){
+        start(declarationPos);
+        Declaration dAST2 = parseProcFunc();
+        finish(declarationPos);
+        declarationAST = new SequentialDeclaration(declarationAST,dAST2,declarationPos);
+      }
+
+    } while(currentToken.kind == Token.AND);
+        return declarationAST;
+  }
 
   private Declaration parseProcFunc() throws SyntaxError {
     Declaration declarationAST = null; // in case there's a syntactic error

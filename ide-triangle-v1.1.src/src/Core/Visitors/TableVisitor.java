@@ -100,6 +100,16 @@ public class TableVisitor implements Visitor {
     }
 
     @Override
+    public Object visitRecursiveProcFunc(RecursiveProcFunc recursiveProcFunc, Object o) {
+        return null;
+    }
+
+    @Override
+    public Object visitPrivateDeclaration(PrivateDeclaration privateDeclaration, Object o) {
+        return null;
+    }
+
+    @Override
     public Object visitElsifCommand(ElsifCommand aThis, Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

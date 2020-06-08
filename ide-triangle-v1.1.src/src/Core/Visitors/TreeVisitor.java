@@ -78,6 +78,16 @@ public class TreeVisitor implements Visitor {
     public Object visitRepeatVariableCommand(RepeatVariableCommand ast, Object o) {
         return(createTernary("Repeat Var Command", ast.RepVarDecl, ast.E,ast.C1));
     }
+
+    @Override
+    public Object visitRecursiveProcFunc(RecursiveProcFunc ast, Object o) {
+        return(createUnary("Recursive Proc/Func Declaration", ast.D));
+    }
+
+    @Override
+    public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        return(createBinary("Private Declaration", ast.dAST, ast.dAST2));
+    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" Expressions ">

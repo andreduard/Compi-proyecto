@@ -53,6 +53,8 @@ public interface Visitor {
   public abstract Object visitTypeDeclaration(TypeDeclaration ast, Object o);
   public abstract Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object o);
   public abstract Object visitVarDeclaration(VarDeclaration ast, Object o);
+  public abstract Object visitRecursiveProcFunc(RecursiveProcFunc recursiveProcFunc, Object o);
+  public abstract Object visitPrivateDeclaration(PrivateDeclaration privateDeclaration, Object o);
 
   // Array Aggregates
   public abstract Object visitMultipleArrayAggregate(MultipleArrayAggregate ast, Object o);

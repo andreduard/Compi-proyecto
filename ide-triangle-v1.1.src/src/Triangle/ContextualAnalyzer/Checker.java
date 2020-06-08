@@ -111,6 +111,16 @@ public final class Checker implements Visitor {
     return null;
   }
 
+  @Override
+  public Object visitRecursiveProcFunc(RecursiveProcFunc recursiveProcFunc, Object o) {
+    return null;
+  }
+
+  @Override
+  public Object visitPrivateDeclaration(PrivateDeclaration privateDeclaration, Object o) {
+    return null;
+  }
+
   // Expressions
 
   // Returns the TypeDenoter denoting the type of the expression. Does

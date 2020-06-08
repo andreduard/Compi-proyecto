@@ -78,10 +78,9 @@ public class LayoutVisitor implements Visitor {
   }
 
   @Override
-  public Object visitRepeatVariableCommand(RepeatVariableCommand repeatVariableCommand, Object o) {
-    return null;
+  public Object visitRepeatVariableCommand(RepeatVariableCommand ast, Object o) {
+    return layoutTernary("RepeatVariableCom.", ast.RepVarDecl, ast.E, ast.C1);
   }
-
 
   // Expressions
   public Object visitArrayExpression(ArrayExpression ast, Object obj) {
@@ -130,6 +129,16 @@ public class LayoutVisitor implements Visitor {
 
 
   // Declarations
+  @Override
+  public Object visitRecursiveProcFunc(RecursiveProcFunc ast, Object o) {
+    return layoutUnary("RecursiveProcFuncDecl.", ast.D);
+  }
+
+  @Override
+  public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+    return layoutBinary("PrivateDecl.", ast.dAST,ast.dAST2);
+  }
+
   public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object obj) {
     return layoutQuaternary("Bin.Op.Decl.", ast.O, ast.ARG1, ast.ARG2, ast.RES);
   }
