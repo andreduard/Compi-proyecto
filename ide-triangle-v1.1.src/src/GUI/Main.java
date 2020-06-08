@@ -9,7 +9,6 @@ import Core.Console.OutputRedirector;
 import Core.IDE.IDEDisassembler;
 import Core.IDE.IDEInterpreter;
 import Core.Visitors.TableVisitor;
-import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
@@ -51,10 +50,7 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main.
      */
-    public Main() {        
-        try {
-            UIManager.setLookAndFeel(new WindowsLookAndFeel());            
-        } catch (Exception e) { }
+    public Main() {
         
         initComponents();
         setSize(640, 480);

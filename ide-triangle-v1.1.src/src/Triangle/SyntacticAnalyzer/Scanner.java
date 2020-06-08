@@ -15,10 +15,14 @@
 package Triangle.SyntacticAnalyzer;
 
 
+import javax.swing.text.html.HTMLWriter;
+
 public final class Scanner {
 
   private SourceFile sourceFile;
   private boolean debug;
+  private boolean WritingHTML;
+  private HTMLWriter htmlWriter;
 
   private char currentChar;
   private StringBuffer currentSpelling;
@@ -48,6 +52,7 @@ public final class Scanner {
     sourceFile = source;
     currentChar = sourceFile.getSource();
     debug = false;
+    WritingHTML = false;
   }
 
   public void enableDebugging() {
@@ -56,6 +61,18 @@ public final class Scanner {
 
   // takeIt appends the current character to the current token, and gets
   // the next character from the source program.
+
+  public void htmlRun(HTMLWriter htmlWriter){
+    this.WritingHTML = true;
+    this.htmlWriter = htmlWriter;
+    Token token;
+    do{
+      token = this.scan();
+
+
+    }while(token.kind != Token.EOT);
+    htmlWriter.finishHTML();
+  }
 
   private void takeIt() {
     if (currentlyScanningToken)
