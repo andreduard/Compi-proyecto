@@ -1,6 +1,5 @@
 if a 
 then x:=1
-elsif b
-then a
-else c
-end
+elsif b then a:=3
+else c:=4
+end
