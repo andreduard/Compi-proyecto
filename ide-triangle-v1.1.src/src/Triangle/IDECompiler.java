@@ -56,11 +56,13 @@ public class IDECompiler {
         Scanner scanner = new Scanner(source);
         report = new IDEReporter();
         Parser parser = new Parser(scanner, report);
+
         boolean success = false;
         
         rootAST = parser.parseProgram();        
         if (report.numErrors == 0) {
-                    success = true;
+            writeXMLProgram(rootAST, sourceName.substring(sourceName.lastIndexOf(File.separatorChar)).replace(".tri", ""));
+            success = true;
                 }
 //        if (report.numErrors == 0) {
 //            System.out.println("Contextual Analysis ...");

@@ -21,14 +21,14 @@ public interface Visitor {
   public abstract Object visitCallCommand(CallCommand ast, Object o);
   public abstract Object visitEmptyCommand(EmptyCommand ast, Object o);
   public abstract Object visitIfCommand(IfCommand ast, Object o);
-  public abstract Object visitElsifCommand(ElsifCommand aThis, Object o);
+  public abstract Object visitElsifCommand(ElsifCommand ast, Object o);
   public abstract Object visitLetCommand(LetCommand ast, Object o);
   public abstract Object visitSequentialCommand(SequentialCommand ast, Object o);
   public abstract Object visitWhileCommand(WhileCommand ast, Object o);
   public abstract Object visitUntilCommand(UntilCommand ast, Object o);
   public abstract Object visitDoWhileCommand(DoWhileCommand ast, Object o);
   public abstract Object visitDoUntilCommand(DoUntilCommand ast, Object o);
-  public abstract Object visitRepeatVariableCommand(RepeatVariableCommand repeatVariableCommand, Object o);
+  public abstract Object visitRepeatVariableCommand(RepeatVariableCommand ast, Object o);
 
 
   // Expressions
@@ -54,9 +54,9 @@ public interface Visitor {
   public abstract Object visitTypeDeclaration(TypeDeclaration ast, Object o);
   public abstract Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object o);
   public abstract Object visitVarDeclaration(VarDeclaration ast, Object o);
-  public abstract Object visitRecursiveProcFunc(RecursiveProcFunc recursiveProcFunc, Object o);
-  public abstract Object visitPrivateDeclaration(PrivateDeclaration privateDeclaration, Object o);
-  public abstract Object visitVarInitializedDeclaration(VarInitializedDeclaration varInitializedDeclaration, Object o);
+  public abstract Object visitRecursiveProcFunc(RecursiveProcFunc ast, Object o);
+  public abstract Object visitPrivateDeclaration(PrivateDeclaration ast, Object o);
+  public abstract Object visitVarInitializedDeclaration(VarInitializedDeclaration ast, Object o);
 
   // Array Aggregates
   public abstract Object visitMultipleArrayAggregate(MultipleArrayAggregate ast, Object o);

@@ -64,7 +64,8 @@ public class LayoutVisitor implements Visitor {
   }
 
   @Override
-  public Object visitUntilCommand(UntilCommand ast, Object o) { return layoutBinary("UntilCom.", ast.E, ast.C);
+  public Object visitUntilCommand(UntilCommand ast, Object o) {
+    return layoutBinary("UntilCom.", ast.E, ast.C);
   }
 
   @Override
@@ -292,7 +293,6 @@ public class LayoutVisitor implements Visitor {
     return layoutUnary("Rec.TypeD.", ast.FT);
   }
 
-
   public Object visitMultipleFieldTypeDenoter(MultipleFieldTypeDenoter ast, Object obj) {
     return layoutTernary("Mult.F.TypeD.", ast.I, ast.T, ast.FT);
   }
@@ -330,8 +330,7 @@ public class LayoutVisitor implements Visitor {
   }
 
   public Object visitSubscriptVname(SubscriptVname ast, Object obj) {
-    return layoutBinary("Sub.Vname",
-        ast.V, ast.E);
+    return layoutBinary("Sub.Vname", ast.V, ast.E);
   }
 
 
