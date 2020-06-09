@@ -1,0 +1,13 @@
+let
+	do
+		func sum(x:Integer, y:Integer):Integer ~
+			x+y
+		end
+	and
+		func double(x:Integer):Integer ~
+			sum(x, x)
+		end
+	end
+in
+	putint(double(1))
+end

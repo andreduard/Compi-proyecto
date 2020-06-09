@@ -221,7 +221,7 @@ public class XMLVisitor implements Visitor {
 //<editor-fold desc="Declarations" defaultstate=collapsed>
     @Override
     public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object o) {
-        writeToXMLFile("BinaryOperatorDeclaration>\n");
+        writeToXMLFile("<BinaryOperatorDeclaration>\n");
         ast.ARG1.visit(this, null);
         ast.O.visit(this, null);
         ast.ARG2.visit(this, null);
@@ -232,7 +232,7 @@ public class XMLVisitor implements Visitor {
 
     @Override
     public Object visitConstDeclaration(ConstDeclaration ast, Object o) {
-        writeToXMLFile("ConstDeclaration>\n");
+        writeToXMLFile("<ConstDeclaration>\n");
         ast.I.visit(this, null);
         ast.E.visit(this, null);
         writeToXMLFile("</ConstDeclaration>\n");
@@ -241,7 +241,7 @@ public class XMLVisitor implements Visitor {
 
     @Override
     public Object visitFuncDeclaration(FuncDeclaration ast, Object o) {
-        writeToXMLFile("FuncDeclaration>\n");
+        writeToXMLFile("<FuncDeclaration>\n");
         ast.I.visit(this, null);
         ast.FPS.visit(this, null);
         ast.T.visit(this, null);
@@ -252,7 +252,7 @@ public class XMLVisitor implements Visitor {
 
     @Override
     public Object visitProcDeclaration(ProcDeclaration ast, Object o) {
-        writeToXMLFile("ProcDeclaration>\n");
+        writeToXMLFile("<ProcDeclaration>\n");
         ast.I.visit(this, null);
         ast.FPS.visit(this, null);
         ast.C.visit(this, null);
@@ -262,7 +262,7 @@ public class XMLVisitor implements Visitor {
 
     @Override
     public Object visitSequentialDeclaration(SequentialDeclaration ast, Object o) {
-        writeToXMLFile("SequentialDeclaration>\n");
+        writeToXMLFile("<SequentialDeclaration>\n");
         ast.D1.visit(this, null);
         ast.D2.visit(this, null);
         writeToXMLFile("</SequentialDeclaration>\n");
@@ -271,7 +271,7 @@ public class XMLVisitor implements Visitor {
 
     @Override
     public Object visitTypeDeclaration(TypeDeclaration ast, Object o) {
-        writeToXMLFile("TypeDeclaration>\n");
+        writeToXMLFile("<TypeDeclaration>\n");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
         writeToXMLFile("</TypeDeclaration>\n");
@@ -280,7 +280,7 @@ public class XMLVisitor implements Visitor {
 
     @Override
     public Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object o) {
-        writeToXMLFile("UnaryOperatorDeclaration>\n");
+        writeToXMLFile("<UnaryOperatorDeclaration>\n");
         ast.O.visit(this, null);
         ast.ARG.visit(this, null);
         ast.RES.visit(this, null);
@@ -290,7 +290,7 @@ public class XMLVisitor implements Visitor {
 
     @Override
     public Object visitVarDeclaration(VarDeclaration ast, Object o) {
-        writeToXMLFile("VarDeclaration>\n");
+        writeToXMLFile("<VarDeclaration>\n");
         ast.I.visit(this, null);
         ast.T.visit(this, null);
         writeToXMLFile("</VarDeclaration>\n");
@@ -299,7 +299,7 @@ public class XMLVisitor implements Visitor {
 
     @Override
     public Object visitRecursiveProcFunc(RecursiveProcFunc ast, Object o) {
-        writeToXMLFile("RecursiveProcFunc>\n");
+        writeToXMLFile("<RecursiveProcFunc>\n");
         ast.D.visit(this, null);
         writeToXMLFile("</RecursiveProcFunc>\n");
         return null;
@@ -307,7 +307,7 @@ public class XMLVisitor implements Visitor {
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        writeToXMLFile("PrivateDeclaration>\n");
+        writeToXMLFile("<PrivateDeclaration>\n");
         ast.dAST.visit(this, null);
         ast.dAST2.visit(this, null);
         writeToXMLFile("</PrivateDeclaration>\n");
@@ -316,7 +316,7 @@ public class XMLVisitor implements Visitor {
 
     @Override
     public Object visitVarInitializedDeclaration(VarInitializedDeclaration ast, Object o) {
-        writeToXMLFile("VarInitializedDeclaration>\n");
+        writeToXMLFile("<VarInitializedDeclaration>\n");
         ast.I.visit(this, null);
         ast.eAST.visit(this, null);
         writeToXMLFile("</VarInitializedDeclaration>\n");
