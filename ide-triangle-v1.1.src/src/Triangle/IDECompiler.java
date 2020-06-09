@@ -7,6 +7,9 @@ package Triangle;
 
 import Triangle.CodeGenerator.Frame;
 import java.awt.event.ActionListener;
+import java.io.File;
+
+import Triangle.ProgramWriter.HTMLWriter;
 import Triangle.SyntacticAnalyzer.SourceFile;
 import Triangle.SyntacticAnalyzer.Scanner;
 import Triangle.AbstractSyntaxTrees.Program;
@@ -44,8 +47,12 @@ public class IDECompiler {
                            "Triangle Compiler (IDE-Triangle 1.0)" +
                            " **********");
         System.out.println("Lexical Analysis ...");
-        System.out.println("Syntactic Analysis ...");
         SourceFile source = new SourceFile(sourceName);
+
+        Scanner scannerHTML = new Scanner(source);
+        scannerHTML.htmlRun(new HTMLWriter(sourceName.substring(sourceName.lastIndexOf(File.separatorChar)).replace(".tri", "")));
+        System.out.println("Syntactic Analysis ...");
+        source = new SourceFile(sourceName);
         Scanner scanner = new Scanner(source);
         report = new IDEReporter();
         Parser parser = new Parser(scanner, report);
