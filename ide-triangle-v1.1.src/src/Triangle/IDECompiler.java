@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import Triangle.ProgramWriter.HTMLWriter;
+import Triangle.ProgramWriter.XMLWriter;
 import Triangle.SyntacticAnalyzer.SourceFile;
 import Triangle.SyntacticAnalyzer.Scanner;
 import Triangle.AbstractSyntaxTrees.Program;
@@ -104,7 +105,14 @@ public class IDECompiler {
         return(rootAST);
     }
     // </editor-fold>
-    
+
+    private void writeXMLProgram(Program programAST, String sourceName){
+        XMLWriter xmlWriter = new XMLWriter(programAST);
+
+        //Write the output files
+        xmlWriter.writeProgramAST(sourceName);
+    }
+
     // <editor-fold defaultstate="collapsed" desc=" Attributes ">
     private Program rootAST;        // The Root Abstract Syntax Tree.    
     private IDEReporter report;     // Our ErrorReporter class.

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Program>
+<IfCommand>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="acb"/>
+</SimpleVname>
+</VnameExpression>
+<AssignCommand>
+<SimpleVname>
+<Identifier value="x"/>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</AssignCommand>
+<ElsifCommand>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="b"/>
+</SimpleVname>
+</VnameExpression>
+<AssignCommand>
+<SimpleVname>
+<Identifier value="a"/>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="3"/>
+</IntegerExpression>
+</AssignCommand>
+<AssignCommand>
+<SimpleVname>
+<Identifier value="c"/>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="4"/>
+</IntegerExpression>
+</AssignCommand>
+</ElsifCommand>
+</IfCommand>
+</Program>
