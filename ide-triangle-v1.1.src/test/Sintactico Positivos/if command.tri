@@ -1,4 +1,6 @@
 if a
 then x:=1
-else x:=2end
+else x:=2
+
+end
 

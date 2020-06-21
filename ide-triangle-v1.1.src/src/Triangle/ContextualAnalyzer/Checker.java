@@ -87,8 +87,13 @@ public final class Checker implements Visitor {
   }
 
   @Override
-  public Object visitElsifCommand(ElsifCommand aThis, Object o) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  public Object visitElsifCommand(ElsifCommand ast, Object o) {
+      TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+      if (! eType.equals(StdEnvironment.booleanType))
+        reporter.reportError("Boolean expression expected here", "", ast.E.position);
+      ast.C1.visit(this, null);
+      ast.C2.visit(this, null);
+      return null;
   }
 
   @Override
@@ -122,7 +127,14 @@ public final class Checker implements Visitor {
   }
 
   @Override
-  public Object visitVarInitializedDeclaration(VarInitializedDeclaration varInitializedDeclaration, Object o) {
+  public Object visitVarInitializedDeclaration(VarInitializedDeclaration ast, Object o) {
+    TypeDenoter eType = (TypeDenoter) ast.eAST.visit(this, null);
+    ast.T = eType;
+
+    idTable.enter (ast.I.spelling, ast);
+    if (ast.duplicated)
+      reporter.reportError ("identifier \"%\" already declared",
+              ast.I.spelling, ast.position);
     return null;
   }
 
