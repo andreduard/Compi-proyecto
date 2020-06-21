@@ -1,0 +1,13 @@
+let 
+    var a: Integer;     
+    var b: Integer    
+    
+in
+    if a<b then  
+        b:= 234  
+    elsif a>b then 
+	nil
+    else
+        a:= 100  
+end 
+end

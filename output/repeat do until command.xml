@@ -2,47 +2,49 @@
 <Program>
 <LetCommand>
 <SequentialDeclaration>
-<VarDeclaration>
-<Identifier value="x"/>
-<SimpleTypeDenoter>
-<Identifier value="Integer"/>
-</SimpleTypeDenoter>
-</VarDeclaration>
+<SequentialDeclaration>
 <VarInitializedDeclaration>
 <Identifier value="a"/>
 <IntegerExpression>
 <IntegerLiteral value="0"/>
 </IntegerExpression>
 </VarInitializedDeclaration>
+<VarInitializedDeclaration>
+<Identifier value="b"/>
+<IntegerExpression>
+<IntegerLiteral value="5"/>
+</IntegerExpression>
+</VarInitializedDeclaration>
 </SequentialDeclaration>
-<IfCommand>
+<VarDeclaration>
+<Identifier value="c"/>
+<SimpleTypeDenoter>
+<Identifier value="Integer"/>
+</SimpleTypeDenoter>
+</VarDeclaration>
+</SequentialDeclaration>
+<DoUntilCommand>
 <BinaryExpression>
 <VnameExpression>
 <SimpleVname>
 <Identifier value="a"/>
 </SimpleVname>
 </VnameExpression>
-<Operator value="="/>
-<IntegerExpression>
-<IntegerLiteral value="0"/>
-</IntegerExpression>
+<Operator value="<"/>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="b"/>
+</SimpleVname>
+</VnameExpression>
 </BinaryExpression>
 <AssignCommand>
 <SimpleVname>
-<Identifier value="x"/>
+<Identifier value="c"/>
 </SimpleVname>
 <IntegerExpression>
-<IntegerLiteral value="1"/>
+<IntegerLiteral value="5"/>
 </IntegerExpression>
 </AssignCommand>
-<AssignCommand>
-<SimpleVname>
-<Identifier value="x"/>
-</SimpleVname>
-<IntegerExpression>
-<IntegerLiteral value="2"/>
-</IntegerExpression>
-</AssignCommand>
-</IfCommand>
+</DoUntilCommand>
 </LetCommand>
 </Program>

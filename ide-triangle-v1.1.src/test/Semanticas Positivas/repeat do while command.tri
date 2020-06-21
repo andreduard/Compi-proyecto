@@ -1,0 +1,4 @@
+repeat
+do a:=6
+while a < 5
+end

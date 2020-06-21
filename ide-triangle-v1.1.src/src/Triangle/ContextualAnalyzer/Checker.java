@@ -98,32 +98,54 @@ public final class Checker implements Visitor {
 
   @Override
   public Object visitUntilCommand(UntilCommand ast, Object o) {
-    return null;
+
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
   }
+
 
   @Override
   public Object visitDoWhileCommand(DoWhileCommand ast, Object o) {
-    return null;
+
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
   }
 
   @Override
   public Object visitDoUntilCommand(DoUntilCommand ast, Object o) {
+    TypeDenoter eType = (TypeDenoter)ast.E.visit(this, null);
+
+    if (!eType.equals(StdEnvironment.booleanType))
+      reporter.reportError("Boolean expression expected here", "", ast.E.position);
+
+    ast.C.visit(this, null);
+
     return null;
   }
 
   @Override
-  public Object visitRepeatVariableCommand(RepeatVariableCommand repeatVariableCommand, Object o) {
+  public Object visitRepeatVariableCommand(RepeatVariableCommand ast, Object o) {
+    TypeDenoter eType = (TypeDenoter)ast.E.visit(this, null);
+
+    if (!eType.equals(StdEnvironment.booleanType))
+      reporter.reportError("Boolean expression expected here", "", ast.C1.position);
+
+    ast.E.visit(this, null);
+
     return null;
   }
+
 
   @Override
   public Object visitRecursiveProcFunc(RecursiveProcFunc recursiveProcFunc, Object o) {
-    return null;
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
   }
 
   @Override
   public Object visitPrivateDeclaration(PrivateDeclaration privateDeclaration, Object o) {
-    return null;
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
   }
 
   @Override

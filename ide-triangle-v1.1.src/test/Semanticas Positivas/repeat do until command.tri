@@ -1,0 +1,10 @@
+let
+	var a := 0;
+	var b := 5;
+	var c:Integer
+in
+repeat
+do c:=5
+until a < b
+end
+end
