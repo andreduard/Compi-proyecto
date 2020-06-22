@@ -1,9 +1,12 @@
 let 
+	var a:Integer;
 	private
-		const x ~ 1
+		const x ~ 1;
+		const y ~ 2	
 	in
-		const y ~ x
+		const z ~ x+y
 	end
-in 
-	x:=2
+in
+	a := 1;
+	putint(z)
 end

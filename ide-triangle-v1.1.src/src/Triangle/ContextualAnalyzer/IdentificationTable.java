@@ -51,6 +51,26 @@ public final class IdentificationTable {
     this.latest = entry;
   }
 
+
+  public void closeScopePrivate () {
+    IdEntry entry, local, localPrivate;
+
+    // Presumably, idTable.level > 0.
+    entry = local = this.latest;
+    while (entry.level == this.level) {
+      entry.level = entry.level - 2 ;
+      local = entry;
+      entry = local.previous;
+    }
+    while (entry.level == this.level-1) {
+      localPrivate = entry;
+      entry = localPrivate.previous;
+    }
+    local.previous = entry;
+    this.level--;
+    this.latest = local;
+  }
+
   // Makes a new entry in the identification table for the given identifier
   // and attribute. The new entry belongs to the current level.
   // duplicated is set to to true iff there is already an entry for the

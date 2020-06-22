@@ -1,4 +1,4 @@
 repeat
-var andres in 0 to 5
-do putint (andres)
+var a in 0 to 5
+do putint (a)
 end
