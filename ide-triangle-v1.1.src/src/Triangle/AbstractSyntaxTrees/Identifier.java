@@ -24,6 +24,14 @@ public class Identifier extends Terminal {
     decl = null;
   }
 
+  @Override
+  public boolean equals(Object obj){
+    if (getClass() != obj.getClass())
+      return false;
+
+    return spelling.equals(((Identifier) obj).spelling);
+  }
+
   public Object visit(Visitor v, Object o) {
     return v.visitIdentifier(this, o);
   }
