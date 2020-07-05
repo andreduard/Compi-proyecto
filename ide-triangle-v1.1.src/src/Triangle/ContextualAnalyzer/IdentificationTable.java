@@ -15,19 +15,37 @@
 package Triangle.ContextualAnalyzer;
 
 import Triangle.AbstractSyntaxTrees.Declaration;
+import Triangle.AbstractSyntaxTrees.Identifier;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public final class IdentificationTable {
 
   private int level;
+  private int recLevel;
   private IdEntry latest;
+  public ArrayList<PendingCall> pendingCalls;
+  public ArrayList<FutureCallExpression> futureCallExpressions;
 
   public IdentificationTable () {
     level = 0;
     latest = null;
+    recLevel = 0;
+    pendingCalls = new ArrayList<>();
+    futureCallExpressions = new ArrayList<>();
+
   }
 
   // Opens a new level in the identification table, 1 higher than the
   // current topmost level.
+
+  public IdentificationTable(IdentificationTable oldIdTable){
+    this.level = oldIdTable.level;
+    this.latest = oldIdTable.latest;
+    this.futureCallExpressions = oldIdTable.futureCallExpressions;
+    //this.recLevel = oldIdTable.recLevel;
+    //this.pendingCalls = oldIdTable.pendingCalls;
+  }
 
   public void openScope () {
 
@@ -124,5 +142,87 @@ public final class IdentificationTable {
 
     return attr;
   }
+
+
+
+  // Finds an entry for the given identifier in the identification table,
+  // if any. If there are several entries for that identifier, finds the
+  // entry at the highest level, in accordance with the scope rules.
+  // Returns null iff no entry is found.
+  // otherwise returns the attribute field of the entry found.
+  // This method is capable of filtering types of Declarations, it is used
+  // when the same operator is defined for both Unary and Binary Expressions
+  public Declaration retrieve (String id, Class decClass) {
+
+    IdEntry entry;
+    Declaration attr = null;
+    boolean searching = true;
+
+    entry = this.latest;
+    while (searching) {
+      if (entry == null)
+        searching = false;
+      else if (entry.attr.getClass() == decClass && entry.id.equals(id)) {
+        searching = false;
+        attr = entry.attr;
+      } else
+        entry = entry.previous;
+    }
+
+    return attr;
+  }
+
+  //---------------------------------------------------------------------------
+  //The use of this is to manage the recursive scopes and check the pending calls
+
+  public void openRecursiveScope(){
+    recLevel++;
+  }
+
+  public void closeRecursiveScope(){
+    recLevel--;
+  }
+
+  public int getLevel() {
+    return level;
+  }
+
+  public void setLevel(int level) {
+    this.level = level;
+  }
+
+  public int getRecLevel() {
+    return recLevel;
+  }
+
+  public void setRecLevel(int recLevel) {
+    this.recLevel = recLevel;
+  }
+
+  public void addPendingCall(PendingCall pendingCall){
+    pendingCalls.add(pendingCall);
+  }
+
+  public void addFutureCallExp(FutureCallExpression ast){
+    this.futureCallExpressions.add(ast);
+  }
+
+  public ArrayList<PendingCall> checkPendingCalls(Identifier pfId){
+
+    ArrayList<PendingCall> toVisit = new ArrayList<>();
+    //(When the program access this method,it does it in the level of the routine's body, so it's needed to subtract 1
+    //to get the level of its declaration)
+    int declLevel = level -1;
+
+    for(PendingCall c : pendingCalls)
+      //Check if the call's level is deeper than the level of the declaration.
+      if (c.getLevel() > declLevel && c.getProcFuncIdentifier().equals(pfId))
+        toVisit.add(c);
+
+    pendingCalls.removeAll(toVisit);
+
+    return toVisit;
+  }
+
 
 }

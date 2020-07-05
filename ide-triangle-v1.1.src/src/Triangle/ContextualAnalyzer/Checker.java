@@ -19,6 +19,8 @@ import Triangle.ErrorReporter;
 import Triangle.StdEnvironment;
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
+import java.util.ArrayList;
+
 public final class Checker implements Visitor {
 
   // Commands
@@ -38,9 +40,21 @@ public final class Checker implements Visitor {
 
   public Object visitCallCommand(CallCommand ast, Object o) {
 
-    Declaration binding = (Declaration) ast.I.visit(this, null);
-    if (binding == null)
-      reportUndeclared(ast.I);
+    Declaration binding;
+    if(o != null)
+      binding = (Declaration)o;
+
+    else
+      binding = (Declaration) ast.I.visit(this, null);
+
+    if (binding == null) {
+      if (idTable.getRecLevel() > 0)
+        idTable.addPendingCall(new PendingCallCommand(new IdentificationTable(idTable), ast));
+
+      else
+        reportUndeclared(ast.I);
+    }
+
     else if (binding instanceof ProcDeclaration) {
       ast.APS.visit(this, ((ProcDeclaration) binding).FPS);
     } else if (binding instanceof ProcFormalParameter) {
@@ -148,9 +162,17 @@ public final class Checker implements Visitor {
 
 
   @Override
-  public Object visitRecursiveProcFunc(RecursiveProcFunc recursiveProcFunc, Object o) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  public Object visitRecursiveProcFunc(RecursiveProcFunc ast, Object o) {
+    idTable.openRecursiveScope();
+    ast.D.visit(this, null);
+    idTable.closeRecursiveScope();
 
+    if(idTable.getRecLevel() == 0 && idTable.pendingCalls.size() > 0){
+      reporter.reportError("\"%\" is not a procedure or function identifier",
+              idTable.pendingCalls.get(0).getProcFuncIdentifier().spelling, idTable.pendingCalls.get(0).getProcFuncIdentifier().position);
+    }
+
+    return null;
   }
 
   @Override
@@ -218,19 +240,42 @@ public final class Checker implements Visitor {
   }
 
   public Object visitCallExpression(CallExpression ast, Object o) {
-    Declaration binding = (Declaration) ast.I.visit(this, null);
+    Declaration binding;
+
+    if(o != null)
+      binding = (Declaration)o;
+
+    else
+      binding = (Declaration) ast.I.visit(this, null);
+
     if (binding == null) {
-      reportUndeclared(ast.I);
-      ast.type = StdEnvironment.errorType;
+      if(idTable.getRecLevel() > 0)
+        idTable.addPendingCall(new PendingCallExpression(new IdentificationTable(idTable),ast));
+
+      else {
+        reportUndeclared(ast.I);
+        ast.type = StdEnvironment.errorType;
+      }
+
     } else if (binding instanceof FuncDeclaration) {
       ast.APS.visit(this, ((FuncDeclaration) binding).FPS);
       ast.type = ((FuncDeclaration) binding).T;
+
+      for (FutureCallExpression fCE : idTable.futureCallExpressions){
+        if(fCE.getE() == ast){
+          if (!fCE.getTypeDenoterToCheck().equals(ast.type))
+            reporter.reportError ("body of function \"%\" has wrong type",
+                    ast.I.spelling, ast.position);
+        }
+      }
+
     } else if (binding instanceof FuncFormalParameter) {
       ast.APS.visit(this, ((FuncFormalParameter) binding).FPS);
       ast.type = ((FuncFormalParameter) binding).T;
     } else
       reporter.reportError("\"%\" is not a function identifier",
-                           ast.I.spelling, ast.I.position);
+              ast.I.spelling, ast.I.position);
+
     return ast.type;
   }
 
@@ -320,26 +365,42 @@ public final class Checker implements Visitor {
   public Object visitFuncDeclaration(FuncDeclaration ast, Object o) {
     ast.T = (TypeDenoter) ast.T.visit(this, null);
     idTable.enter (ast.I.spelling, ast); // permits recursion
-    if (ast.duplicated)
+    if (ast.duplicated) {
       reporter.reportError ("identifier \"%\" already declared",
-                            ast.I.spelling, ast.position);
+              ast.I.spelling, ast.position);
+    }
+
     idTable.openScope();
     ast.FPS.visit(this, null);
+
+    visitPendingCalls(ast.I);
+
     TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
     idTable.closeScope();
-    if (! ast.T.equals(eType))
+
+    //We don't know the type of the future call yet
+    if(eType == null) {
+      idTable.addFutureCallExp(new FutureCallExpression(ast.T, ast.E));
+      return null;
+    }
+
+    else if (! ast.T.equals(eType))
       reporter.reportError ("body of function \"%\" has wrong type",
-                            ast.I.spelling, ast.E.position);
+              ast.I.spelling, ast.E.position);
     return null;
   }
 
   public Object visitProcDeclaration(ProcDeclaration ast, Object o) {
     idTable.enter (ast.I.spelling, ast); // permits recursion
     if (ast.duplicated)
-      reporter.reportError ("identifier \"%\" already declared",
-                            ast.I.spelling, ast.position);
+      reporter.reportError ("identifier \"%\" already declared", ast.I.spelling, ast.position);
     idTable.openScope();
+
     ast.FPS.visit(this, null);
+
+    visitPendingCalls(ast.I);
+
+
     ast.C.visit(this, null);
     idTable.closeScope();
     return null;
@@ -483,6 +544,12 @@ public final class Checker implements Visitor {
   public Object visitConstActualParameter(ConstActualParameter ast, Object o) {
     FormalParameter fp = (FormalParameter) o;
     TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
+
+    //We don't know the type of the future call yet
+    if(eType == null) {
+      idTable.addFutureCallExp(new FutureCallExpression( ((ConstFormalParameter)fp).T, ast.E));
+      return null;
+    }
 
     if (! (fp instanceof ConstFormalParameter))
       reporter.reportError ("const actual parameter not expected here", "",
@@ -674,7 +741,12 @@ public final class Checker implements Visitor {
   }
 
   public Object visitOperator(Operator O, Object o) {
-    Declaration binding = idTable.retrieve(O.spelling);
+    Declaration binding;
+    if (o != null) {
+      binding = idTable.retrieve(O.spelling, (Class) o);
+    } else {
+      binding = idTable.retrieve(O.spelling);
+    }
     if (binding != null)
       O.decl = binding;
     return binding;
@@ -817,6 +889,19 @@ public final class Checker implements Visitor {
     return StdEnvironment.errorType;
   }
 
+  private void visitPendingCalls(Identifier I) {
+    ArrayList<PendingCall> pendingCalls = idTable.checkPendingCalls(I);
+    IdentificationTable currentIdTable = this.idTable;
+
+    pendingCalls.stream().map((pC) -> {
+      Declaration procFuncDecl = (Declaration) pC.getProcFuncIdentifier().visit(this, null);
+      this.idTable = pC.getCallContextIdTable(); //Sets the Id Table as how it was in the moment of the call
+      pC.visitPendingCall(this, procFuncDecl); //Visit each of them. Pass the visit of the proc to bind it to the call
+      return pC;
+    }).forEachOrdered((_item) -> {
+      this.idTable = currentIdTable; //Sets the id table back
+    });
+  }
 
   // Creates a small AST to represent the "declaration" of a standard
   // type, and enters it in the identification table.

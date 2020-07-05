@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Program>
+<LetCommand>
+<RecursiveProcFunc>
+<SequentialDeclaration>
+<FuncDeclaration>
+<Identifier value="sum"/>
+<MultipleFormalParameterSequence>/n<ConstantFormalParameters>/n<Identifier value="x"/>
+<SimpleTypeDenoter>
+<Identifier value="Integer"/>
+</SimpleTypeDenoter>
+</ConstantFormalParameters>/n<SingleFormalParameterSequence>/n<ConstantFormalParameters>/n<Identifier value="y"/>
+<SimpleTypeDenoter>
+<Identifier value="Integer"/>
+</SimpleTypeDenoter>
+</ConstantFormalParameters>/n</SingleFormalParameterSequence>/n</MultipleFormalParameterSequence>/n<SimpleTypeDenoter>
+<Identifier value="Integer"/>
+</SimpleTypeDenoter>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="x"/>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="y"/>
+</SimpleVname>
+</VnameExpression>
+</BinaryExpression>
+</FuncDeclaration>
+<FuncDeclaration>
+<Identifier value="double"/>
+<SingleFormalParameterSequence>/n<ConstantFormalParameters>/n<Identifier value="x"/>
+<SimpleTypeDenoter>
+<Identifier value="Integer"/>
+</SimpleTypeDenoter>
+</ConstantFormalParameters>/n</SingleFormalParameterSequence>/n<SimpleTypeDenoter>
+<Identifier value="Integer"/>
+</SimpleTypeDenoter>
+<CallExpression>
+<Identifier value="sum"/>
+<MultipleActualParameterSequence>
+<ConstantActualParameter>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="x"/>
+</SimpleVname>
+</VnameExpression>
+</ConstantActualParameter>
+<SingleActualParameterSequence>
+<ConstantActualParameter>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="x"/>
+</SimpleVname>
+</VnameExpression>
+</ConstantActualParameter>
+</SingleActualParameterSequence>
+</MultipleActualParameterSequence>
+</CallExpression>
+</FuncDeclaration>
+</SequentialDeclaration>
+</RecursiveProcFunc>
+<CallCommand>
+<Identifier value="putint"/>
+<SingleActualParameterSequence>
+<ConstantActualParameter>
+<CallExpression>
+<Identifier value="double"/>
+<SingleActualParameterSequence>
+<ConstantActualParameter>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ConstantActualParameter>
+</SingleActualParameterSequence>
+</CallExpression>
+</ConstantActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</LetCommand>
+</Program>
