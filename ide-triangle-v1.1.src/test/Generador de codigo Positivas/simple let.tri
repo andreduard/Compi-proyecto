@@ -4,7 +4,7 @@ let
 
 in 
 
-	putint(a);
-	putint(b[0]);
+	putint(a);puteol();
+	putint(b[0]);puteol();
 	putint(b[1])
 end

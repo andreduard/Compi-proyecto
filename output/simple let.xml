@@ -26,6 +26,8 @@
 </SequentialDeclaration>
 <SequentialCommand>
 <SequentialCommand>
+<SequentialCommand>
+<SequentialCommand>
 <CallCommand>
 <Identifier value="putint"/>
 <SingleActualParameterSequence>
@@ -38,6 +40,11 @@
 </ConstantActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
+<CallCommand>
+<Identifier value="puteol"/>
+<EmptyActualParameterSequence/>
+</CallCommand>
+</SequentialCommand>
 <CallCommand>
 <Identifier value="putint"/>
 <SingleActualParameterSequence>
@@ -54,6 +61,11 @@
 </VnameExpression>
 </ConstantActualParameter>
 </SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<Identifier value="puteol"/>
+<EmptyActualParameterSequence/>
 </CallCommand>
 </SequentialCommand>
 <CallCommand>
