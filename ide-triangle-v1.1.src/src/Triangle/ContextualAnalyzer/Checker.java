@@ -150,13 +150,17 @@ public final class Checker implements Visitor {
 
   @Override
   public Object visitRepeatVariableCommand(RepeatVariableCommand ast, Object o) {
-    TypeDenoter eType = (TypeDenoter)ast.E.visit(this, null);
+    TypeDenoter eType = (TypeDenoter)ast.RepVarDecl.E.visit(this, null);
+    TypeDenoter eType2 = (TypeDenoter)ast.E.visit(this, null);
 
-    if (!eType.equals(StdEnvironment.booleanType))
-      reporter.reportError("Boolean expression expected here", "", ast.E.position);
 
+    if (!eType.equals(StdEnvironment.integerType) || !eType2.equals(StdEnvironment.integerType) )
+      reporter.reportError("Integer expression expected here", "", ast.E.position);
+
+    idTable.enter(ast.RepVarDecl.I.spelling, ast.RepVarDecl);
+    idTable.openScope();
     ast.C1.visit(this, null);
-
+    idTable.closeScope();
     return null;
   }
 

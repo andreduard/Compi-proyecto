@@ -1,0 +1,9 @@
+let 
+	var a := 0;
+	var b:Integer
+in
+repeat
+while a < 5
+do b:=5
+end
+end

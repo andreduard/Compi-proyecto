@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Program>
+<LetCommand>
+<SequentialDeclaration>
+<VarInitializedDeclaration>
+<Identifier value="a"/>
+<IntegerExpression>
+<IntegerLiteral value="12"/>
+</IntegerExpression>
+</VarInitializedDeclaration>
+<VarInitializedDeclaration>
+<Identifier value="b"/>
+<ArrayExpression>
+<MultipleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+<SingleArrayAggregate>
+<IntegerExpression>
+<IntegerLiteral value="3"/>
+</IntegerExpression>
+</SingleArrayAggregate>
+</MultipleArrayAggregate>
+</ArrayExpression>
+</VarInitializedDeclaration>
+</SequentialDeclaration>
+<SequentialCommand>
+<SequentialCommand>
+<CallCommand>
+<Identifier value="putint"/>
+<SingleActualParameterSequence>
+<ConstantActualParameter>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="a"/>
+</SimpleVname>
+</VnameExpression>
+</ConstantActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+<CallCommand>
+<Identifier value="putint"/>
+<SingleActualParameterSequence>
+<ConstantActualParameter>
+<VnameExpression>
+<SubscriptVname>
+<SimpleVname>
+<Identifier value="b"/>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="0"/>
+</IntegerExpression>
+</SubscriptVname>
+</VnameExpression>
+</ConstantActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+<CallCommand>
+<Identifier value="putint"/>
+<SingleActualParameterSequence>
+<ConstantActualParameter>
+<VnameExpression>
+<SubscriptVname>
+<SimpleVname>
+<Identifier value="b"/>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</SubscriptVname>
+</VnameExpression>
+</ConstantActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+</LetCommand>
+</Program>

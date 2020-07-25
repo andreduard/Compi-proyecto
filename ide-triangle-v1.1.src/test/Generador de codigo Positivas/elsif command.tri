@@ -1,0 +1,12 @@
+let
+	var x:Integer;
+	var a := 1;
+	var c:Integer;
+	var b := 0
+in
+if a=1
+then x:=1
+elsif b=0 then a:=3
+else c:=4
+end
+end

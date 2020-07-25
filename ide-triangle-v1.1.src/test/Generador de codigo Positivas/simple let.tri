@@ -1,0 +1,10 @@
+let 
+	var a := 12;
+	var b := [2,3]
+
+in 
+
+	putint(a);
+	putint(b[0]);
+	putint(b[1])
+end

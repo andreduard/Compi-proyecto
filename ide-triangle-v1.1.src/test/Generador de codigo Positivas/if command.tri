@@ -1,0 +1,11 @@
+let 
+
+	var x: Integer;
+	var a := 0
+in
+if a=0
+then x:=1
+else x:=2
+
+end
+end

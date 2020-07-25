@@ -81,37 +81,22 @@ public class TableVisitor implements Visitor {
 
     @Override
     public Object visitUntilCommand(UntilCommand ast, Object o) {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object visitDoWhileCommand(DoWhileCommand ast, Object o) {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object visitDoUntilCommand(DoUntilCommand ast, Object o) {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Object visitRepeatVariableCommand(RepeatVariableCommand repeatVariableCommand, Object o) {
-        return null;
-    }
-
-    @Override
-    public Object visitRecursiveProcFunc(RecursiveProcFunc recursiveProcFunc, Object o) {
-        return null;
-    }
-
-    @Override
-    public Object visitPrivateDeclaration(PrivateDeclaration privateDeclaration, Object o) {
-        return null;
-    }
-
-    @Override
-    public Object visitVarInitializedDeclaration(VarInitializedDeclaration varInitializedDeclaration, Object o) {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -287,6 +272,32 @@ public class TableVisitor implements Visitor {
       ast.T.visit(this, null);
       return(null);
   }
+
+    @Override
+    public Object visitRecursiveProcFunc(RecursiveProcFunc ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object visitVarInitializedDeclaration(VarInitializedDeclaration ast, Object o) {
+        try {
+            addIdentifier(ast.I.spelling,
+                    "KnownAddressWithValue",
+                    (ast.entity!=null?ast.entity.size:0),
+                    ((KnownAddress)ast.entity).address.level,
+                    ((KnownAddress)ast.entity).address.displacement,
+                    -1);
+        } catch (NullPointerException e) { }
+
+        ast.T.visit(this, null);
+        return(null);
+    }
+
   
   // </editor-fold>
 

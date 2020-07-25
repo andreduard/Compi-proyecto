@@ -1,0 +1,12 @@
+let 
+	var a:Integer;
+	private
+		const x ~ 1;
+		const y ~ 2	
+	in
+		const z ~ x+y
+	end
+in
+	a := 1;
+	putint(z)
+end

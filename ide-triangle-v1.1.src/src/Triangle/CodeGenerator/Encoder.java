@@ -93,40 +93,46 @@ public final class Encoder implements Visitor {
     return null;
   }
 
+  //Se van a agregar frame nuevos y insertar las intrucciones nuevas para estos
   @Override
   public Object visitUntilCommand(UntilCommand ast, Object o) {
-    return null;
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
   @Override
   public Object visitDoWhileCommand(DoWhileCommand ast, Object o) {
-    return null;
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
   @Override
   public Object visitDoUntilCommand(DoUntilCommand ast, Object o) {
-    return null;
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
   @Override
-  public Object visitRepeatVariableCommand(RepeatVariableCommand repeatVariableCommand, Object o) {
-    return null;
+  public Object visitRepeatVariableCommand(RepeatVariableCommand ast, Object o) {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
   @Override
-  public Object visitRecursiveProcFunc(RecursiveProcFunc recursiveProcFunc, Object o) {
-    return null;
+  public Object visitRecursiveProcFunc(RecursiveProcFunc ast, Object o) {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
   @Override
-  public Object visitPrivateDeclaration(PrivateDeclaration privateDeclaration, Object o) {
-    return null;
+  public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
   @Override
-  public Object visitVarInitializedDeclaration(VarInitializedDeclaration varInitializedDeclaration, Object o) {
-    return null;
-  }
+  public Object visitVarInitializedDeclaration(VarInitializedDeclaration ast, Object o) {
+    Frame frame = (Frame) o;
+    int extraSize;
+
+    extraSize = (Integer) ast.eAST.visit(this, frame);
+    ast.entity = new KnownAddress(Machine.addressSize, frame.level, frame.size);
+    writeTableDetails(ast);
+    return new Integer(extraSize);  }
 
   @Override
   public Object visitElsifCommand(ElsifCommand aThis, Object o) {
