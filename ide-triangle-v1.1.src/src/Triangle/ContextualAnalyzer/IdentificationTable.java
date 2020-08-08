@@ -85,8 +85,10 @@ public final class IdentificationTable {
       entry = localPrivate.previous;
     }
     local.previous = entry;
-    this.level--;
-    this.latest = local;
+
+    this.level = level-2;
+    //this.level--;
+    //this.latest = local;
   }
 
   // Makes a new entry in the identification table for the given identifier

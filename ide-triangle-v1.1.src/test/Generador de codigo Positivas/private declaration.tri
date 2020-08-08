@@ -1,6 +1,6 @@
 let 
 	var a:Integer;
-	private
+	private 
 		const x ~ 1;
 		const y ~ 2	
 	in

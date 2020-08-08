@@ -4,7 +4,9 @@ let
 	var c:Integer
 in
 repeat
-do c:=5
-until a < b
+do 
+putint(a);
+a:=a+1
+until a > b
 end
 end

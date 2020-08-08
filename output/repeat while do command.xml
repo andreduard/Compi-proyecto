@@ -2,43 +2,31 @@
 <Program>
 <LetCommand>
 <SequentialDeclaration>
-<SequentialDeclaration>
 <VarInitializedDeclaration>
 <Identifier value="a"/>
 <IntegerExpression>
 <IntegerLiteral value="0"/>
 </IntegerExpression>
 </VarInitializedDeclaration>
-<VarInitializedDeclaration>
-<Identifier value="b"/>
-<IntegerExpression>
-<IntegerLiteral value="5"/>
-</IntegerExpression>
-</VarInitializedDeclaration>
-</SequentialDeclaration>
 <VarDeclaration>
-<Identifier value="c"/>
+<Identifier value="b"/>
 <SimpleTypeDenoter>
 <Identifier value="Integer"/>
 </SimpleTypeDenoter>
 </VarDeclaration>
 </SequentialDeclaration>
-<UntilCommand>
+<WhileCommand>
 <BinaryExpression>
 <VnameExpression>
 <SimpleVname>
 <Identifier value="a"/>
 </SimpleVname>
 </VnameExpression>
-<Operator value=">"/>
-<VnameExpression>
-<SimpleVname>
-<Identifier value="b"/>
-</SimpleVname>
-</VnameExpression>
+<Operator value="<"/>
+<IntegerExpression>
+<IntegerLiteral value="5"/>
+</IntegerExpression>
 </BinaryExpression>
-<SequentialCommand>
-<SequentialCommand>
 <SequentialCommand>
 <CallCommand>
 <Identifier value="putint"/>
@@ -52,24 +40,6 @@
 </ConstantActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
-<CallCommand>
-<Identifier value="putint"/>
-<SingleActualParameterSequence>
-<ConstantActualParameter>
-<VnameExpression>
-<SimpleVname>
-<Identifier value="b"/>
-</SimpleVname>
-</VnameExpression>
-</ConstantActualParameter>
-</SingleActualParameterSequence>
-</CallCommand>
-</SequentialCommand>
-<CallCommand>
-<Identifier value="puteol"/>
-<EmptyActualParameterSequence/>
-</CallCommand>
-</SequentialCommand>
 <AssignCommand>
 <SimpleVname>
 <Identifier value="a"/>
@@ -87,6 +57,6 @@
 </BinaryExpression>
 </AssignCommand>
 </SequentialCommand>
-</UntilCommand>
+</WhileCommand>
 </LetCommand>
 </Program>

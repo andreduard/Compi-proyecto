@@ -4,6 +4,8 @@ let
 in
 repeat
 while a < 5
-do b:=5
+do	
+	putint(a);
+	a:= a+1
 end
 end

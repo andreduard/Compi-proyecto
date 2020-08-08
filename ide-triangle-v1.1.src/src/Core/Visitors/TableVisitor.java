@@ -81,28 +81,43 @@ public class TableVisitor implements Visitor {
 
     @Override
     public Object visitUntilCommand(UntilCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.E.visit(this, null);
+        ast.C.visit(this, null);
+
+        return(null);
     }
 
     @Override
     public Object visitDoWhileCommand(DoWhileCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.E.visit(this, null);
+        ast.C.visit(this, null);
+
+        return(null);
     }
 
     @Override
     public Object visitDoUntilCommand(DoUntilCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.E.visit(this, null);
+        ast.C.visit(this, null);
+
+        return(null);
     }
 
     @Override
-    public Object visitRepeatVariableCommand(RepeatVariableCommand repeatVariableCommand, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object visitRepeatVariableCommand(RepeatVariableCommand ast, Object o) {
+        ast.RepVarDecl.visit(this,null);
+        ast.E.visit(this,null);
+        ast.C1.visit(this,null);
+        return null;
     }
 
     @Override
-    public Object visitElsifCommand(ElsifCommand aThis, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public Object visitElsifCommand(ElsifCommand ast, Object o) {
+        ast.E.visit(this, null);
+        ast.C1.visit(this, null);
+        ast.C2.visit(this, null);
+
+        return(null);    }
 
     // </editor-fold>
 
@@ -280,7 +295,9 @@ public class TableVisitor implements Visitor {
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.dAST.visit(this,null);
+        ast.dAST2.visit(this,null);
+        return (null);
     }
 
     @Override

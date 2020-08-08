@@ -23,14 +23,14 @@
 </SimpleTypeDenoter>
 </VarDeclaration>
 </SequentialDeclaration>
-<UntilCommand>
+<DoWhileCommand>
 <BinaryExpression>
 <VnameExpression>
 <SimpleVname>
 <Identifier value="a"/>
 </SimpleVname>
 </VnameExpression>
-<Operator value=">"/>
+<Operator value="<"/>
 <VnameExpression>
 <SimpleVname>
 <Identifier value="b"/>
@@ -38,8 +38,6 @@
 </VnameExpression>
 </BinaryExpression>
 <SequentialCommand>
-<SequentialCommand>
-<SequentialCommand>
 <CallCommand>
 <Identifier value="putint"/>
 <SingleActualParameterSequence>
@@ -52,24 +50,6 @@
 </ConstantActualParameter>
 </SingleActualParameterSequence>
 </CallCommand>
-<CallCommand>
-<Identifier value="putint"/>
-<SingleActualParameterSequence>
-<ConstantActualParameter>
-<VnameExpression>
-<SimpleVname>
-<Identifier value="b"/>
-</SimpleVname>
-</VnameExpression>
-</ConstantActualParameter>
-</SingleActualParameterSequence>
-</CallCommand>
-</SequentialCommand>
-<CallCommand>
-<Identifier value="puteol"/>
-<EmptyActualParameterSequence/>
-</CallCommand>
-</SequentialCommand>
 <AssignCommand>
 <SimpleVname>
 <Identifier value="a"/>
@@ -87,6 +67,6 @@
 </BinaryExpression>
 </AssignCommand>
 </SequentialCommand>
-</UntilCommand>
+</DoWhileCommand>
 </LetCommand>
 </Program>

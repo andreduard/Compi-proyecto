@@ -25,6 +25,8 @@ import Triangle.AbstractSyntaxTrees.*;
 import Triangle.ErrorReporter;
 import Triangle.StdEnvironment;
 
+import javax.crypto.Mac;
+
 public final class Encoder implements Visitor {
 
 
@@ -96,22 +98,78 @@ public final class Encoder implements Visitor {
   //Se van a agregar frame nuevos y insertar las intrucciones nuevas para estos
   @Override
   public Object visitUntilCommand(UntilCommand ast, Object o) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Frame frame = (Frame) o;
+    int jumpAddr, loopAddr;
+
+    jumpAddr = nextInstrAddr;
+    emit(Machine.JUMPop, 0, Machine.CBr, 0);
+    loopAddr = nextInstrAddr;
+    ast.C.visit(this, frame);
+    patch(jumpAddr, nextInstrAddr);
+    ast.E.visit(this, frame);
+    emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, loopAddr);
+    return null;
   }
 
   @Override
   public Object visitDoWhileCommand(DoWhileCommand ast, Object o) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Frame frame = (Frame) o;
+    int loopAddr;
+
+    loopAddr = nextInstrAddr;
+    ast.C.visit(this, frame);
+    ast.E.visit(this, frame);
+    emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+    return null;
+
   }
 
   @Override
   public Object visitDoUntilCommand(DoUntilCommand ast, Object o) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Frame frame = (Frame) o;
+    int loopAddr;
+
+    loopAddr = nextInstrAddr;
+    ast.C.visit(this, frame);
+    ast.E.visit(this, frame);
+    emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, loopAddr);
+    return null;
   }
 
   @Override
   public Object visitRepeatVariableCommand(RepeatVariableCommand ast, Object o) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Frame frame = (Frame) o;
+
+    //Load the halt expression
+    int haltExpressionSize = (Integer) ast.E.visit(this,frame);
+    frame = new Frame(frame, haltExpressionSize);
+
+    //Load the Initiation expression
+    int initiationExpressionSize = (Integer) ast.RepVarDecl.E.visit(this,frame);
+    ast.RepVarDecl.entity = new UnknownValue(initiationExpressionSize,frame.level,frame.size);
+    frame = new Frame(frame, initiationExpressionSize);
+
+    //Jump addresses
+    int jumpAddr, loopAddr;
+    jumpAddr = nextInstrAddr;
+    emit(Machine.JUMPop,0, Machine.SBr, 0);
+    loopAddr = nextInstrAddr;
+    ast.C1.visit(this, frame); //command
+
+    //Control variable value
+    emit(Machine.CALLop,Machine.SBr,Machine.PBr, Machine.succDisplacement); //Increase var value
+    patch(jumpAddr,nextInstrAddr); //path incomplete jump
+
+    //Check if repeat continues
+    emit(Machine.LOADop,1,Machine.STr, -1);
+    emit(Machine.LOADop,1,Machine.STr, -3);
+
+    emit(Machine.CALLop, 0, Machine.PBr,Machine.leDisplacement); // Check the <=
+    emit(Machine.JUMPIFop,1,Machine.SBr, loopAddr); //Conditional jump
+
+    emit(Machine.POPop,0, 0, initiationExpressionSize + haltExpressionSize);
+
+    return null;
   }
 
   @Override
@@ -121,7 +179,13 @@ public final class Encoder implements Visitor {
 
   @Override
   public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Frame frame = (Frame) o;
+    int extraSize1, extraSize2;
+
+    extraSize1 = ((Integer) ast.dAST.visit(this, frame));
+    Frame frame1 = new Frame(frame,extraSize1);
+    extraSize2 = ((Integer) ast.dAST2.visit(this, frame));
+    return extraSize1 + extraSize2;
   }
 
   @Override
@@ -135,8 +199,20 @@ public final class Encoder implements Visitor {
     return new Integer(extraSize);  }
 
   @Override
-  public Object visitElsifCommand(ElsifCommand aThis, Object o) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  public Object visitElsifCommand(ElsifCommand ast, Object o) {
+    Frame frame = (Frame) o;
+    int jumpifAddr, jumpAddr;
+
+    Integer valSize = (Integer) ast.E.visit(this, frame);
+    jumpifAddr = nextInstrAddr;
+    emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, 0);
+    ast.C1.visit(this, frame);
+    jumpAddr = nextInstrAddr;
+    emit(Machine.JUMPop, 0, Machine.CBr, 0);
+    patch(jumpifAddr, nextInstrAddr);
+    ast.C2.visit(this, frame);
+    patch(jumpAddr, nextInstrAddr);
+    return null;
   }
 
   // Expressions
@@ -252,12 +328,12 @@ public final class Encoder implements Visitor {
         ast.entity = new KnownValue(Machine.integerSize,
 				 Integer.parseInt(IL.spelling));
     } else {
-      int valSize = ((Integer) ast.E.visit(this, frame)).intValue();
+      int valSize = ((Integer) ast.E.visit(this, frame));
       ast.entity = new UnknownValue(valSize, frame.level, frame.size);
       extraSize = valSize;
     }
     writeTableDetails(ast);
-    return new Integer(extraSize);
+    return extraSize;
   }
 
   public Object visitFuncDeclaration(FuncDeclaration ast, Object o) {

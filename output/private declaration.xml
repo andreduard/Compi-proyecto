@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Program>
+<LetCommand>
+<SequentialDeclaration>
+<VarDeclaration>
+<Identifier value="a"/>
+<SimpleTypeDenoter>
+<Identifier value="Integer"/>
+</SimpleTypeDenoter>
+</VarDeclaration>
+<PrivateDeclaration>
+<SequentialDeclaration>
+<ConstDeclaration>
+<Identifier value="x"/>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</ConstDeclaration>
+<ConstDeclaration>
+<Identifier value="y"/>
+<IntegerExpression>
+<IntegerLiteral value="2"/>
+</IntegerExpression>
+</ConstDeclaration>
+</SequentialDeclaration>
+<ConstDeclaration>
+<Identifier value="z"/>
+<BinaryExpression>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="x"/>
+</SimpleVname>
+</VnameExpression>
+<Operator value="+"/>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="y"/>
+</SimpleVname>
+</VnameExpression>
+</BinaryExpression>
+</ConstDeclaration>
+</PrivateDeclaration>
+</SequentialDeclaration>
+<SequentialCommand>
+<AssignCommand>
+<SimpleVname>
+<Identifier value="a"/>
+</SimpleVname>
+<IntegerExpression>
+<IntegerLiteral value="1"/>
+</IntegerExpression>
+</AssignCommand>
+<CallCommand>
+<Identifier value="putint"/>
+<SingleActualParameterSequence>
+<ConstantActualParameter>
+<VnameExpression>
+<SimpleVname>
+<Identifier value="z"/>
+</SimpleVname>
+</VnameExpression>
+</ConstantActualParameter>
+</SingleActualParameterSequence>
+</CallCommand>
+</SequentialCommand>
+</LetCommand>
+</Program>

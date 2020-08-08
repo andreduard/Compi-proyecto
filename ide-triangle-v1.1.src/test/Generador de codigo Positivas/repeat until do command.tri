@@ -4,8 +4,12 @@ let
 	var c:Integer
 in
 repeat
-until a < b
-do c:=5
+until a > b
+do
+	putint(a);
+	putint(b);
+	puteol();
+	a:=a + 1
 end
 end
 
