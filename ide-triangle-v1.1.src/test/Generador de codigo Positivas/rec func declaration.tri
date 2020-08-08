@@ -1,13 +1,13 @@
 let
 	rec
-		func sum(x:Integer, y:Integer):Integer ~
-			x+y
-		end
-	and
 		func double(x:Integer):Integer ~
 			sum(x, x)
 		end
+	and
+		func sum(x:Integer, y:Integer):Integer ~
+			x+y
+		end
 	end
 in
-	putint(double(1))
+	putint(double(2))
 end

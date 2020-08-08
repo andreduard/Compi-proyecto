@@ -173,7 +173,7 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
-  public Object visitRecordExpression(RecordExpression ast, Object o) {   
+  public Object visitRecordExpression(RecordExpression ast, Object o) {
       ast.RA.visit(this, null);
       
       return(null);
@@ -290,7 +290,8 @@ public class TableVisitor implements Visitor {
 
     @Override
     public Object visitRecursiveProcFunc(RecursiveProcFunc ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ast.D.visit(this,null);
+        return null;
     }
 
     @Override

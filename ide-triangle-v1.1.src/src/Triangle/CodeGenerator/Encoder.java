@@ -174,7 +174,15 @@ public final class Encoder implements Visitor {
 
   @Override
   public Object visitRecursiveProcFunc(RecursiveProcFunc ast, Object o) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Frame frame = (Frame) o;
+
+    int currentInstrAddress = nextInstrAddr;
+
+    ast.D.visit(this,frame);
+
+    nextInstrAddr = currentInstrAddress;
+
+    return (Integer) ast.D.visit(this,frame);
   }
 
   @Override
@@ -370,13 +378,13 @@ public final class Encoder implements Visitor {
       reporter.reportRestriction("can't nest routines so deeply");
     else {
       Frame frame1 = new Frame(frame.level + 1, 0);
-      argsSize = ((Integer) ast.FPS.visit(this, frame1)).intValue();
+      argsSize = ((Integer) ast.FPS.visit(this, frame1));
       Frame frame2 = new Frame(frame.level + 1, Machine.linkDataSize);
       ast.C.visit(this, frame2);
     }
     emit(Machine.RETURNop, 0, 0, argsSize);
     patch(jumpAddr, nextInstrAddr);
-    return new Integer(0);
+    return 0;
   }
 
   public Object visitSequentialDeclaration(SequentialDeclaration ast, Object o) {
@@ -673,7 +681,11 @@ public final class Encoder implements Visitor {
 
   public Object visitIdentifier(Identifier ast, Object o) {
     Frame frame = (Frame) o;
-    if (ast.decl.entity instanceof KnownRoutine) {
+
+    if (ast.decl.entity == null)
+      emit(Machine.CALLop, 0, Machine.CBr,0);
+    
+    else if (ast.decl.entity instanceof KnownRoutine) {
       ObjectAddress address = ((KnownRoutine) ast.decl.entity).address;
       emit(Machine.CALLop, displayRegister(frame.level, address.level),
 	   Machine.CBr, address.displacement);
